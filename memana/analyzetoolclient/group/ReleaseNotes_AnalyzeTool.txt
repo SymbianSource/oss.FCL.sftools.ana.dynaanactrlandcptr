@@ -1,0 +1,328 @@
+===============================================================================
+
+RELEASE NOTES - AnalyzeTool v1.8.0
+RELEASED 1st December 2009
+
+===============================================================================
+
+Product Description:
+====================
+
+AnalyzeTool is a test software tool that is used for testing Symbian software
+for memory leaks and pinpointing the leaking problems from the source code.
+
+
+Main Features:
+==============
+- Pinpoints memoryleaks from target hardware and emulator to source code lines
+- Discovers resource leaks from process
+- Command line interface and Carbide.c++ Extension
+
+===============================================================================
+
+What's New in 1.8.0
+===================
+
+-New:[AT-45] - Memory usage shown as graph.
+
+===============================================================================
+
+Installation Notes:
+===================
+PDK Tools Overlay installer should be used to install AnalyzeTool to the used
+environment. After that AnalyzeTool should be build to all used platforms and
+both build types (udeb/urel) in that environment.
+ 
+AnalyzeTool is found from sf\pdt\dynaanactrlandcptr\memana\analyzetoolclient
+folder. Building should be done in group folder.
+
+Note: Before building check symbian_version.hrh file that it defines correct
+version for your environment.
+
+===============================================================================
+
+System Requirements:
+====================
+- Windows XP
+- Trace connection for real time data gathering to PC
+
+Additional Requirements:
+- Carbide.c++ v2.x
+
+===============================================================================
+
+Compatibility Issues:
+=====================
+- Not compatible with versions older than 1.5.0 of AnalyzeTool
+- Kernel code analysis not supported
+
+===============================================================================
+
+Known Issues:
+=============
+- When using monitored internal data gathering mode (-mi) and hooked application contains huge 
+amounts of allocations, AnalyzeTool storageserver might run out of memory to store the data. This 
+message "Symbian error code -4" is seen in the data file. Solution is to 
+use external / monitored external data gathering mode. No fix is planned yeat. 
+
+- Switch allocator. AnalyzeTool change the application memory allocator to AnalyzeTool own memory 
+allocator and using the User::SwitchAllocator function can lead to situation where the tested 
+application does not work properly. No fix is planned yeat. 
+
+- AnalyzeTool hooked QT applications becomes too slow to run. Improved in release 1.7.4 where you 
+can use small size call stack(s) and new logging mode (external -e). 
+
+- Stif test case with AnalyzeTool can inform wrong memory leak alert. No fix is planned yeat. 
+
+- AnalyzeTool overwrites functions TInt User::ProcessCritical(TCritical aCritical) and TInt 
+User::SetProcessCritical(TCritical aCritical), but this works only when the function is called from 
+hooked exe application. So if setting critical is done from DLL (even if it's hooked with 
+AnalyzeTool) the overwriting does not work and the process stays set critical during the testing. No 
+fix is planned yeat. 
+
+- If hooked application is closed by calling User::Exit() from DLL instead of .exe application 
+AnalyzeTool reports "abnormal process end" and can't report proper memory leaks. No fix is planned 
+yeat. 
+
+===============================================================================
+Version History:
+================
+
+Version in 1.7.4 - 4th November 2009
+---------------------------------
+-New: [AT-560] - Third data gathering mode which is simple and fast.
+-New: [AT-592] - Support for specifying call stack size(s).
+-New: [AT-627] - Button to open preferences.
+-New: [AT-551] - New error dialogs in Carbide extension.
+-New: [AT-583] - Extension version number shown in AnalyzeTool view.
+-Fix: [AT-568] - Inform user in build phase that kernel mode is not supported/hooked.
+-Fix: [AT-623] - Version conflict not shown to user.
+-Fix: [AT-632] - Selecting leak from sub test does not give call stack info.
+-Fix: [AT-630] - Console UI leaks memory.
+
+Version in 1.7.3 - 1st October 2009
+---------------------------------
+-New: [AT-570] - Support reading debug data from ROFS files.
+-New: [AT-495] - Timestamps in DLL load/unload messages.
+-New: [AT-540] - Support for DLL timestamps in CLI.
+-New: [AT-544] - Use all found emulator binaries in analyze.
+-New: [AT-527] - Timestamp in free trace message.
+-Fix: [AT-463] - Memory card drive letter hard coded.
+
+Version in 1.7.2 - 3th September 2009
+---------------------------------
+-Fix: [AT-569] - False memory leak reported when test had handle leak(s)
+-Fix: [AT-535] - Hooked application panics on exit at certain environment
+
+Version in 1.7.1 - 19th August 2009
+---------------------------------
+-Fix: [AT-542] - Decrease extension memory usage when creating results.
+-Fix: [AT-548] - Write protected mmp files will not prevent building project.
+-Fix: [AT-553] - Device data file input should not accept path.
+-Fix: [AT-554] - User build accidentally slow debug version of AnalyzeTool
+-Fix: [AT-528] - Mutex access violation error in certain environment.
+-Fix: [AT-562] - Two tests in one log file may fail to pinpoint.
+-Fix: [AT-563] - Analysis takes allocations before process start tag.
+-Fix: [AT-526] - Memory check related macro panics when application is hooked.
+-Fix: [AT-541] - Opening help on hooked application causes panic.
+-Fix: [AT-555] - AnalyzeTool skips some reallocations.
+-New: [AT-558] - Supporting new environment.
+
+Version in 1.7.0 - 25th June 2009
+---------------------------------
+-Fix: [AT-521] - AnalyzeTool results can be incorrect if new line is non-standard
+-Fix: [AT-414] - Logging level 2 does not work in raptor and build type urel correctly
+-Fix: [AT-508] - Show error if illegal parameters
+-Fix: [AT-464] - Verbose output renders AnalyzeTool unusable slow
+-Fix: [AT-517] - Improve parsing speed of addresses
+-New: [AT-320] - Create support to use xml project definition when building using raptor.
+-New: [AT-389] - User can easily check version of AnalyzeTool in SDK
+-New: [AT-134] - Carbide.c++ AnalyzeTool building of a QT project
+-New: [AT-236] - Refresh button which makes results again
+-New: [AT-136] - Carbide extension to visualize results for emulator/simulator memory leaks automatically
+
+Version in 1.6.0 - 20th April 2009
+---------------------------------
+-New: [AT-475] - Number of max callstack items increased to 40
+-New: [AT-453] - On the fly call stack filtering improved
+-New: [AT-481] - "PROCESS_END x ABNORMAL" are now printed also when internal data gathering mode is used
+-Fix: [AT-491] - Error info improved with new command line parameters
+
+Version in 1.5.2 - 2nd April 2009
+---------------------------------
+-New: [AT-455] - A lot of changes to atool.exe parameters
+-New: [AT-257] - addr2line.exe in now used to pinpoint code lines
+-New: [AT-337] - Supports for pinpointing codelines from GCCE binaries
+-New: [AT-113] - Pinpoint memory leaks to code lines also in urel builds
+-Fix: [AT-461] - Pinpointing works also to dlls in emulator environment.
+-Fix: [AT-470] - Logging levels 1&2 (atool -a l1 or atool -a l2) shows now only pinpointed lines
+-Fix: [AT-483] - Commandline crash fixed when project build to winscw platform
+-Fix: [AT-328] - User is now warned when build type differs between data and project
+-Fix: [AT-419] - Clear AnalyzeTool changes (atool -c) runs reallyclean also
+-Fix: [AT-446] - Error message is display when user analysis invalid data
+-Fix: [AT-413] - Building errors fixed
+
+Version 1.5.1 - 19th March 2009
+-------------------------------
+-Fix: [AT-422] - Abnormal process ends not anymore showed for non-AnalyzeTool processes
+-Fix: [AT-433] - Summary info fixed when executing atool.exe with -uninst parameter
+-Fix: [AT-415] - New mmp specified error message added to sbs2 builds
+-Fix: [AT-449] - Thread killing now handled correctly
+-Fix: [AT-452] - All library events are now handled by DAnalyzeToolEventHandler
+-New: [AT-443] - Atool version is checked when hooked application is started
+-New: [AT-343] - System components info in callstack is read from rom symbols file
+-New: [AT-451] - Added support for pinpointing codelines from static libraries in ARMV5 platform
+
+Version 1.5.0 - 19th February 2008
+----------------------------------
+-Fix: [AT-317] - Multible processes can log to same datafile
+-Fix: [AT-350] - Running atool -c in directory where only empty atool_temp directory exists will not delete atool_temp directory
+-Fix: [AT-330] - In analyze report pinpointed memoryleak count is always zero when using raptor, in logging levels 1 & 2
+-Fix: [AT-333] - Use of raptor build variables leads to incorrect listing file name with certain types
+-Fix: [AT-357] - AnalyzeTool can share existing TraceViewer connection
+-Fix: [AT-361] - Unnecessary "Can not analyze" dialog is no longer displayed after the project is built with AnalyzeTool.
+-Fix: [AT-363] - Needed files for AnalyzeTool hooking are also checked for winscw
+-Fix: [AT-376] - Analyze Tool Pre- and Post-Build Errors are added to Problems View
+-Fix: [AT-272] - AnalyzeTool debug logging improved
+-Fix: [AT-374] - Start tracing icon changed
+-Fix: [AT-332] - Only supported mmp target types are now hooked
+-Fix: [AT-372] - If SDK prefs not ok in Carbide, atool gives error: missing libraries from SDK
+-Fix: [AT-378] - Crash when trying to navigate to source location
+-Fix: [AT-388] - Hooked application no longer panics if there is old version of atool in SDK (now application does not start if versions do not match)
+-Fix: [AT-390] - Emulator pinpoints to wrong cpp file
+-Fix: [AT-393] - Progress monitor is shown while starting the TraceViewer connection
+-Fix: [AT-417] - AnalyzeTool configUI memory leaks fixed
+-Fix: [AT-316] - New 'How to use examples' added to command line help
+-Fix: [AT-410] - Command line tool, "atool.exe", is bundled into the Carbide extension
+-Fix: [AT-325] - unnecessary copying of trace file removed from Carbide
+-Fix: [AT-358] - Disable unnecessary AnalyzeTool buttons when trace is started.
+-New: [AT-296] - AnalyzeTool supports hooking and unhooking of project in command line
+-New: [AT-254] - AnalyzeTool to work also in emulator
+-New: [AT-323] - AnalyzeTool Carbide extension can be used without Traceviewer Extension
+
+Version 1.4.1 - 19th December 2008
+----------------------------------
+-Fix: [AT-310] - AnalyzeTool consoleapplication does not show all process information
+
+Version 1.4.0 - 12th December 2008
+----------------------------------
+-New: [AT-263] - Atool supports Symbian build system version 2 (SBS v.2)
+-Fix: [AT-271] - "atool -c" gives badly formed error texts
+-Fix: [AT-294] - Atool.exe to check if there is process start and dll_load in datafile
+
+Version 1.3.3 - 27th November 2008
+----------------------------------
+-Fix: [AT-237] - Support analysing datafiles without /epoc32/build content or from sub folder where build was made
+-Fix: [AT-285] - Temporary file left to output directory in atool.exe analyze
+-Fix: [AT-292] - S60_UPGRADABLE_APP_REG_RSC macro not always available
+-Fix: [AT-283] - AnalyzeTool.iby works also on PP environment
+
+Version 1.3.2 - 13th November 2008
+----------------------------------
+-Fix: [AT-224] - Multiple modules use same source files (objects listing files)
+-Fix: [AT-220] - Atool.exe to show what is trying to copy or move
+-Fix: [AT-238] - Logging level filtering summary
+-New: [AT-233] - Results include processes udeb/urel info.
+
+Version 1.3.1 - 30th October 2008
+---------------------------------
+-Fix: [AT-228] - Atool tries to delete same temp directory multiple times
+-Fix: [AT-247] - run abld reallyclean instead of abld clean
+-Fix: [AT-215] - AnalyzeTool panics on certain environment
+
+Version 1.3.0 - 23rd October 2008
+---------------------------------
+-Fix: [AT-156] - Multiple subtests within test run show only one subtest
+-Fix: [AT-179] - Atool misinterprets data filename which contains "-l" in string as logging argument
+-Fix: [AT-181] - Logging levels 1 and 3 produce same results when using UREL target
+-Fix: [AT-204] - Memoryhook prints PROCESS_END when child threads are killed
+-Fix: [AT-206] - Atool reports runs from irrelevant PROCESS_ENDS
+-Fix: [AT-210] - Logging level 2 incorrect call stack data
+-Fix: [AT-222] - No error message data file can not be opened
+-Fix: [AT-225] - NPE when using the Analyze View in Carbide 2.0.
+-Fix: [AT-227] - AnalyzeTool uses default variant if no variant parameter is used and default level1 makefiles content is invalid
+-Doc: [AT-175] - AnalyzeTool user guide to have advanced section which explains in detail how tool works
+-New: [AT-66]  - Merge call stack info from main exe and dlls.
+-New: [AT-118] - Show urel/udeb info from main process
+-New: [AT-145] - Analyze is made to given module target name
+-New: [AT-162] - bldmake bldfiles to call only for needed components
+-New: [AT-163] - a single process start - end, should not be a test run
+-New: [AT-183] - atool continues even if bldmake bldfiles fails
+-New: [AT-189] - Carbide.c++ Extension shows ABNORMAL text when system exception happens in the phone
+-New: [AT-190] - Carbide.c++ Extension could filter memory leaks which does not contain any call stack
+-New: [AT-191] - MemoryHook reports PROCESS_END with ABNORMAL tag
+-New: [AT-192] - atool -c to undo mmp change
+-New: [AT-196] - logging datafile shown in Configuration UI
+-New: [AT-202] - Modules with read only mmp files can be hooked
+-New: [AT-209] - Print logging filename if not given
+-New: [AT-211] - AnalyzeTool supports new environments
+-New: [AT-214] - atool could check "build" parameter before assuming debug build
+
+Version 1.2.1 - 2nd October 2008
+--------------------------------
+-Fix: [AT-165] - Process end is not get when process is killed
+-Fix: [AT-176] - Should not hook STATIC libraries
+-Fix: [AT-177] - atool.exe makes changes before creating backup from mmp file
+-Fix: [AT-188] - Atool can not pinpoint codelines from variant modules.
+-New: [AT-142] - Subtests supports handle leak detection
+-New: [AT-159] - AnalyzeTool no longer hooks kernel side components
+-New: [AT-123] - Configuration UI could be used to kill processes in device
+
+Version 1.2.0 - 18th September 2008
+-----------------------------------
+-Fix: [AT-56] - Error when project is build in Carbide.
+-Fix: [AT-73] - White space not ignored when reading target from MMP-file
+-Fix: [AT-87] - XML report file is incorrect when executing multiple test runs with subtest
+-Fix: [AT-93] - Error note "AnalyzeTool can not find all .cpp files" even when project consists of only .c files.
+-Fix: [AT-101] - UI fixes
+-Fix: [AT-102] - MMP selection dialog during build
+-Fix: [AT-109] - Does not follow build order
+-Fix: [AT-110] - Jump to code line does not work
+-Fix: [AT-119] - Updating AnalyzeTool, installed on ROM, with a SIS-file fails.
+-Fix: [AT-143] - Save button menu in previous (wrong) place
+-Fix: [AT-157] - "Number of memory allocations: " can be wrong with multiple test runs
+-Fix: [AT-160] - Carbide.c++ start trace dialog does not contain cancel option
+-New: [AT-74] - Get module info from makefile
+-New: [AT-90] - Check for missing files before building
+-New: [AT-98] - Use makefile templates
+-New: [AT-116] - Improved AnalyzeTool Carbide.c++ Extension to use Carbide builder
+-New: [AT-117] - Improve results showing
+-New: [AT-121] - Urel build selection in Carbide
+-New: [AT-144] - Environment changes zips to include also binaries for various environments
+-New: [AT-149] - Check that AnalyzeTool works with mmp files without .mmp extension
+-New: [AT-53] - AnalyzeTool supports also building and analysing urel binaries
+
+Version 1.1.2 - 21th August 2008
+--------------------------------
+-Fix: [AT-50] - Atool result not always displayed.
+-Fix: [AT-97] - Launching Carbide generates error message to error log
+-Fix: [AT-99] - 'Module not build with AnalyzeTool' is still displayed after AnalyzeTool build.
+
+Version 1.1.1 - 7th August 2008
+-------------------------------
+-Fix: [AT-72] - Command line tool can not handle project where two MMP-files are in same directory
+
+Version 1.1.0 - 10th July 2008
+------------------------------
+-Fix: [AT-70] - Redundant handle leak information
+-New: [AT-59] - Trace data can be saved to a file.
+-New: [AT-68] - Cancel logging from ConfigUI feature.
+
+===============================================================================
+
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*/

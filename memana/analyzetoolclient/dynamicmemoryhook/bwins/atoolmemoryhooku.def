@@ -1,0 +1,13 @@
+EXPORTS
+	?Alloc@RAnalyzeToolAllocator@@UAEPAXH@Z @ 1 NONAME ; void * RAnalyzeToolAllocator::Alloc(int)
+	?Alloc@RAnalyzeToolMainAllocator@@UAEPAXH@Z @ 2 NONAME ; void * RAnalyzeToolMainAllocator::Alloc(int)
+	?Exit@CustomUser@@SAXH@Z @ 3 NONAME ; void CustomUser::Exit(int)
+	?InstallAllocator@CustomUser@@CAAAVRAllocator@@HV?$TBuf@$0BAA@@@KKKK@Z @ 4 NONAME ; class RAllocator & CustomUser::InstallAllocator(int, class TBuf<256>, unsigned long, unsigned long, unsigned long, unsigned long)
+	?Panic@CustomUser@@SAXABVTDesC16@@H@Z @ 5 NONAME ; void CustomUser::Panic(class TDesC16 const &, int)
+	?SetCritical@CustomUser@@SAHW4TCritical@User@@@Z @ 6 NONAME ; int CustomUser::SetCritical(enum User::TCritical)
+	?SetProcessCritical@CustomUser@@SAHW4TCritical@User@@@Z @ 7 NONAME ; int CustomUser::SetProcessCritical(enum User::TCritical)
+	?SetupThreadHeap@CustomUser@@SAHHAAUSStdEpocThreadCreateInfo@@V?$TBuf@$0BAA@@@KK1KK@Z @ 8 NONAME ; int CustomUser::SetupThreadHeap(int, struct SStdEpocThreadCreateInfo &, class TBuf<256>, unsigned long, unsigned long, class TBuf<256>, unsigned long, unsigned long)
+	?StartSubTest@AnalyzeToolInterface@@SAXABVTDesC8@@@Z @ 9 NONAME ; void AnalyzeToolInterface::StartSubTest(class TDesC8 const &)
+	?StopSubTest@AnalyzeToolInterface@@SAXABVTDesC8@@@Z @ 10 NONAME ; void AnalyzeToolInterface::StopSubTest(class TDesC8 const &)
+	?__DbgMarkEnd@CustomUser@@SAKHH@Z @ 11 NONAME ; unsigned long CustomUser::__DbgMarkEnd(int, int)
+
