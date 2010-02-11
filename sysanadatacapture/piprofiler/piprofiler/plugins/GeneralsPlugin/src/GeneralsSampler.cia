@@ -1,0 +1,67 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  
+*
+*/
+
+
+#include <platform.h>
+
+#include "GeneralsDriver.h"
+#include <kern_priv.h>		//temporary
+
+#ifdef __WINS__
+__NAKED__ TUint* IntStackPtr()
+{
+	return 0;
+}
+
+__NAKED__ TUint32 SPSR()
+{
+	return 0;
+}
+__NAKED__ void UsrModLr(TUint32* a)
+{
+	*a = 0;
+}
+#else
+
+__NAKED__ TUint* IntStackPtr()
+{
+	asm("mrs r1, cpsr ");
+	asm("bic r3, r1, #0x1f ");
+//#ifdef __MISA__
+//	asm("orr r3, r3, #0xd1 ");		// mode_fiq, all interrupts off
+//#else
+	asm("orr r3, r3, #0xd2 ");		// mode_irq, all interrupts off
+//#endif
+	asm("msr cpsr, r3 ");
+	asm("mov r0, sp ");				// r0=sp_irq or sp_fiq
+	asm("msr cpsr, r1 ");			// restore interrupts
+	__JUMP(,lr);
+}
+
+__NAKED__ TUint32 SPSR()
+{
+	asm("mrs r0, spsr ");
+	__JUMP(,lr);
+}
+__NAKED__ void UsrModLr(TUint32*)
+{
+	// r0 = address to store
+	asm ("stmia r0,{lr}^");
+	__JUMP(,lr);
+}
+
+#endif
